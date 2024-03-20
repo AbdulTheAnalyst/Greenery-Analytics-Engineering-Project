@@ -1,0 +1,111 @@
+models:
+  - name: stg_products
+    description: |
+      Describe the products
+    columns:
+      - name: PRODUCT_ID
+        description: The unique identifier for each product in the database. This is a
+          VARCHAR field.
+        data_type: VARCHAR
+      - name: NAME
+        description: The name of the product. This is a VARCHAR field.
+        data_type: VARCHAR
+      - name: PRICE
+        description: The price of the product. This is a FLOAT field representing the
+          cost of the product.
+        data_type: FLOAT
+      - name: INVENTORY
+        description: This column represents the current inventory count for each
+          product. It is a numeric value that indicates the quantity of the
+          product available in stock.
+        data_type: NUMBER
+  - name: stg_users
+    description: "Describe the userThe stg_users model is derived from the
+      raw.public.users source. It contains the following columns: USER_ID,
+      FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, CREATED_AT, UPDATED_AT,
+      ADDRESS_ID. These columns provide detailed information about the users,
+      including their personal details (first name, last name, email, phone
+      number), the time of their account creation and last update, and their
+      associated address ID."
+    columns:
+      - name: USER_ID
+        description: The USER_ID column is a unique identifier for each user in the
+          database. It is an integer value that is automatically generated when
+          a new user is created.
+        data_type: VARCHAR
+      - name: FIRST_NAME
+        description: The FIRST_NAME column stores the first name of the user. It is a
+          string value that is input by the user during account creation.
+        data_type: VARCHAR
+      - name: LAST_NAME
+        description: The LAST_NAME column stores the last name of the user. Similar to
+          the FIRST_NAME column, it is a string value that is input by the user
+          during account creation.
+        data_type: VARCHAR
+      - name: EMAIL
+        description: The email address of the user. This is a unique identifier for each
+          user and is used for communication purposes.
+        data_type: VARCHAR
+      - name: PHONE_NUMBER
+        description: The phone number of the user. This is another contact detail that
+          can be used for communication purposes.
+        data_type: VARCHAR
+      - name: CREATED_AT
+        description: The timestamp when the user's record was created. This helps in
+          tracking the user's journey from the time they joined.
+        data_type: TIMESTAMP_NTZ
+      - name: UPDATED_AT
+        description: The timestamp when the user's information was last updated in the
+          database.
+        data_type: TIMESTAMP_NTZ
+      - name: ADDRESS_ID
+        description: The unique identifier for the user's address in the address table.
+        data_type: VARCHAR
+  - name: stg_addresses
+    description: "The stg_addresses model is a staging model that is derived from
+      the raw.public.addresses source. It contains five columns: ADDRESS_ID,
+      ADDRESS, ZIPCODE, STATE, and COUNTRY. The ADDRESS_ID is a unique
+      identifier for each address. The ADDRESS column contains the street name
+      and number. The ZIPCODE column contains the postal code for the address.
+      The STATE column contains the state where the address is located. The
+      COUNTRY column contains the country where the address is located."
+    columns:
+      - name: ADDRESS_ID
+        description: Unique identifier for each address record
+        data_type: VARCHAR
+      - name: ADDRESS
+        description: The full address of the location
+        data_type: VARCHAR
+      - name: ZIPCODE
+        description: The postal code of the location
+        data_type: NUMBER
+      - name: STATE
+        description: The 'STATE' column represents the state in which the address is
+          located. It is a VARCHAR type, meaning it contains alphanumeric
+          characters.
+        data_type: VARCHAR
+      - name: COUNTRY
+        description: The 'COUNTRY' column represents the country in which the address is
+          located. It is also a VARCHAR type, meaning it contains alphanumeric
+          characters.
+        data_type: VARCHAR
+  - name: stg_order_items
+    description: "The stg_order_items model is a staging model that is derived from
+      the raw.public.order_items source. It contains three columns: ORDER_ID,
+      PRODUCT_ID, and QUANTITY. The ORDER_ID column represents the unique
+      identifier for each order. The PRODUCT_ID column represents the unique
+      identifier for each product. The QUANTITY column represents the quantity
+      of the product ordered."
+    columns:
+      - name: ORDER_ID
+        description: The unique identifier for each order. This is a VARCHAR field and
+          can contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: PRODUCT_ID
+        description: The unique identifier for each product. This is a VARCHAR field and
+          can contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: QUANTITY
+        description: The quantity of the product ordered. This is a NUMBER field and can
+          contain numeric values.
+        data_type: NUMBER
