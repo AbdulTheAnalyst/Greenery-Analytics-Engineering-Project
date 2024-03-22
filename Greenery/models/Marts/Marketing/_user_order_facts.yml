@@ -1,0 +1,64 @@
+models:
+  - name: user_order_facts
+    description: The 'user_order_facts' model is a summary of user order data. It
+      includes the user_id, the total number of orders per user (order_count),
+      binary flags indicating whether a user has placed an order (has_ordered)
+      and whether a user has placed multiple orders (has_ordered_mult). It also
+      includes the timestamp of the first and last order placed by each user
+      (first_order_utc, last_order_utc), the average and total cost of orders
+      (avg_order_costs, total_order_costs), the average and total shipping costs
+      (avg_shipping_costs, total_shipping_costs), the average shipping time in
+      days (avg_ship_time_days), and the count of distinct shipping services
+      used (distinct_ship_svcs_count). The model is built by joining the
+      'stg_orders' and 'stg_users' staging tables on the 'user_id' field.
+    columns:
+      - name: USER_ID
+        description: The unique identifier for each user in the database. This is a
+          VARCHAR field.
+      - name: ORDER_COUNT
+        description: The total number of orders placed by a user. This is a NUMBER field.
+      - name: HAS_ORDERED
+        description: A binary field indicating whether a user has placed an order or
+          not. If the user has placed at least one order, this field will be 1,
+          otherwise, it will be 0. This is a NUMBER field.
+      - name: HAS_ORDERED_MULT
+        description: This is a binary flag that indicates whether a user has placed more
+          than one order. A value of 1 means the user has placed multiple
+          orders, while a value of 0 means the user has placed one or no orders.
+      - name: FIRST_ORDER_UTC
+        description: This timestamp indicates the date and time of the user's first
+          order in Coordinated Universal Time (UTC). If the user has not placed
+          any orders, this field will be null.
+      - name: LAST_ORDER_UTC
+        description: This timestamp indicates the date and time of the user's most
+          recent order in Coordinated Universal Time (UTC). If the user has not
+          placed any orders, this field will be null.
+      - name: AVG_ORDER_COSTS
+        description: This column represents the average cost of all orders placed by a
+          user. It is calculated by taking the sum of all order costs and
+          dividing it by the total number of orders. If a user has not placed
+          any orders, the value will be 0.
+      - name: TOTAL_ORDER_COSTS
+        description: This column represents the total cost of all orders placed by a
+          user. It is calculated by summing up the cost of all orders. If a user
+          has not placed any orders, the value will be 0.
+      - name: AVG_SHIPPING_COSTS
+        description: This column represents the average shipping cost for all orders
+          placed by a user. It is calculated by taking the sum of all shipping
+          costs and dividing it by the total number of orders. If a user has not
+          placed any orders, the value will be 0.
+      - name: TOTAL_SHIPPING_COSTS
+        description: This column represents the total shipping costs for all orders made
+          by a user. It is calculated by summing up the shipping costs of all
+          orders associated with a particular user. The value is set to 0 if no
+          orders are found for the user.
+      - name: AVG_SHIP_TIME_DAYS
+        description: This column represents the average shipping time in days for all
+          orders made by a user. It is calculated by taking the average of the
+          difference in days between the order creation date and the delivery
+          date for all orders associated with a particular user.
+      - name: DISTINCT_SHIP_SVCS_COUNT
+        description: This column represents the count of distinct shipping services used
+          by a user for all their orders. It is calculated by counting the
+          distinct shipping services associated with all orders made by a
+          particular user.

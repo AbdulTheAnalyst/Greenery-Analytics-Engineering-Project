@@ -1,0 +1,68 @@
+models:
+  - name: dim_users
+    description: The 'dim_users' model is a comprehensive dataset that combines
+      user-specific and address-related information. It provides a holistic view
+      of each user, including their personal details like name, email, and phone
+      number, as well as their address details. This model is particularly
+      useful for business decisions related to customer segmentation,
+      personalized marketing, and user behavior analysis. It can also assist in
+      operational decisions such as logistics planning and delivery management.
+    columns:
+      - name: USER_ID
+        description: The 'USER_ID' column is a unique identifier for each user in the
+          'dim_users' model. It is a primary key that links the user data from
+          the 'stg_users' source to the 'dim_users' model.
+        data_type: VARCHAR
+        tests:
+          - unique
+          - not_null
+      - name: FIRST_NAME
+        description: The 'FIRST_NAME' column represents the first name of the user. It
+          is a string data type and is sourced from the 'stg_users' source.
+        data_type: VARCHAR
+      - name: LAST_NAME
+        description: The 'LAST_NAME' column represents the last name of the user. It is
+          a string data type and is sourced from the 'stg_users' source.
+        data_type: VARCHAR
+      - name: EMAIL
+        description: The EMAIL column represents the email address of the user. It is a
+          unique identifier for each user in the system.
+        data_type: VARCHAR
+      - name: PHONE_NUMBER
+        description: The PHONE_NUMBER column represents the phone number of the user. It
+          is a unique identifier for each user in the system.
+        data_type: VARCHAR
+      - name: CREATED_AT
+        description: The CREATED_AT column represents the timestamp when the user was
+          created in the system. It is stored in UTC.
+        data_type: TIMESTAMP_NTZ
+      - name: UPDATED_AT
+        description: The 'UPDATED_AT' column represents the timestamp of the most recent
+          update made to a user's record. It is automatically generated whenever
+          a change is made to the user's data in the 'stg_users' table.
+        data_type: TIMESTAMP_NTZ
+      - name: ADDRESS_ID
+        description: The 'ADDRESS_ID' column is a unique identifier for each address in
+          the 'stg_addresses' table. It is used to link a user's record in the
+          'stg_users' table to their corresponding address record.
+        data_type: VARCHAR
+      - name: ADDRESS
+        description: The 'ADDRESS' column contains the full street address for a user.
+          This data is sourced from the 'stg_addresses' table and linked to the
+          user's record via the 'address_id' field.
+        data_type: VARCHAR
+      - name: ZIPCODE
+        description: The 'ZIPCODE' column represents the postal code associated with the
+          user's address. It is a string type field that is derived from the
+          'stg_addresses' staging table.
+        data_type: NUMBER
+      - name: STATE
+        description: The 'STATE' column represents the state or province associated with
+          the user's address. It is a string type field that is derived from the
+          'stg_addresses' staging table.
+        data_type: VARCHAR
+      - name: COUNTRY
+        description: The 'COUNTRY' column represents the country associated with the
+          user's address. It is a string type field that is derived from the
+          'stg_addresses' staging table.
+        data_type: VARCHAR

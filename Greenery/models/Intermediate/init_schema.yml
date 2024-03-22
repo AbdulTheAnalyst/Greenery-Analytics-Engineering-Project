@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: int_session_event_agg
+    description: aggregates a count of each event per session/user
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
+      - name: session_id
+        tests:
+          - not_null
+          - unique

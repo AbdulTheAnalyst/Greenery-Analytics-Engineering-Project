@@ -1,0 +1,32 @@
+models:
+  - name: dim_products
+    description: The 'dim_products' model is a comprehensive view of the product
+      information. It provides key details about each product, including its
+      unique identifier, name, price, and current inventory level. This model is
+      crucial for business decisions as it allows for easy tracking of product
+      performance, pricing strategies, and inventory management. It can be used
+      to identify best-selling products, evaluate pricing effectiveness, and
+      ensure optimal inventory levels to meet customer demand.
+    columns:
+      - name: PRODUCT_ID
+        description: The unique identifier for each product in the database.
+        data_type: VARCHAR
+        tests:
+        - unique
+        - not_null
+
+      - name: NAME
+        description: The name of the product.
+        data_type: VARCHAR
+      - name: PRICE
+        description: The price of the product.
+        data_type: FLOAT
+        tests:
+        - positive_values
+
+      - name: INVENTORY
+        description: The INVENTORY column represents the current quantity of the product
+          available in stock.
+        data_type: NUMBER
+        tests:
+        - positive_values

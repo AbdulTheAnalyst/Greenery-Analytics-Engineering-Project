@@ -1,0 +1,81 @@
+models:
+  - name: fct_orders
+    description: The fct_orders model is a fact table that contains detailed
+      information about each order placed. It includes the order_id, user_id,
+      promo_id, address_id, created_at_utc, order_cost, shipping_cost,
+      order_total, tracking_id, shipping_service, estimated_delivery_at_utc,
+      delivered_at_utc, and status. The model also includes the event_count from
+      the stg_events table and the item_count from the stg_order_items table.
+      The event_count represents the number of events associated with each
+      order, and the item_count represents the number of items in each order.
+      The data is sourced from the stg_orders, stg_events, and stg_order_items
+      tables in the dev_db.dbt_daudaroqeeboluwatosingmailcom schema.
+    columns:
+      - name: ORDER_ID
+        description: The unique identifier for each order. This is a primary key in the
+          'fct_orders' model.
+        data_type: VARCHAR
+        tests:
+          - unique
+          - not_null
+      - name: USER_ID
+        description: The unique identifier for each user. This represents the customer
+          who placed the order.
+        data_type: VARCHAR
+      - name: PROMO_ID
+        description: The unique identifier for any promotional codes or discounts
+          applied to the order. If no promo was used, this field may be null.
+        data_type: VARCHAR
+      - name: ADDRESS_ID
+        description: The unique identifier for the address where the order is to be
+          delivered.
+        data_type: VARCHAR
+      - name: CREATED_AT_UTC
+        description: The timestamp in UTC when the order was created.
+        data_type: TIMESTAMP_NTZ
+      - name: ORDER_COST
+        description: The total cost of the items in the order, excluding shipping costs.
+        data_type: FLOAT
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 9999999
+      - name: SHIPPING_COST
+        description: The cost associated with shipping the order. This is calculated
+          based on the shipping service selected and the destination of the
+          order.
+        data_type: FLOAT
+      - name: ORDER_TOTAL
+        description: The total cost of the order. This includes the cost of the items in
+          the order and the shipping cost.
+        data_type: FLOAT
+      - name: TRACKING_ID
+        description: The unique identifier provided by the shipping service to track the
+          progress of the order delivery.
+        data_type: VARCHAR
+      - name: SHIPPING_SERVICE
+        description: The name of the shipping service used for the order. This could be
+          any courier or postal service.
+        data_type: VARCHAR
+      - name: ESTIMATED_DELIVERY_AT_UTC
+        description: The estimated delivery date and time for the order in Coordinated
+          Universal Time (UTC). This is calculated based on the shipping service
+          and the destination.
+        data_type: TIMESTAMP_NTZ
+      - name: DELIVERED_AT_UTC
+        description: The actual delivery date and time for the order in Coordinated
+          Universal Time (UTC). This is recorded when the order is marked as
+          delivered.
+        data_type: TIMESTAMP_NTZ
+      - name: STATUS
+        description: The status of the order. This can be 'pending', 'shipped',
+          'delivered', 'cancelled', etc.
+        data_type: VARCHAR
+      - name: EVENT_COUNT
+        description: The total number of events associated with the order. This includes
+          actions like 'order placed', 'order shipped', 'order delivered', etc.
+        data_type: NUMBER
+      - name: ITEM_COUNT
+        description: The total number of items in the order. This is calculated by
+          counting the number of unique items in the order.
+        data_type: NUMBER
