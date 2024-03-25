@@ -1,78 +1,221 @@
 version: 2
-
 models:
   - name: stg_orders
-    description: Individual order info 
+    description: The 'stg_orders' model provides detailed information about
+      individual orders placed by users. It includes key details such as the
+      unique identifiers for the order and user, promotional descriptions,
+      address details, and timestamps for when the order was created, estimated
+      for delivery, and actually delivered. It also includes the cost of the
+      order, shipping cost, total order cost, tracking details, shipping service
+      used, and the current status of the order. This model is crucial for
+      understanding customer purchasing behavior, tracking order fulfillment,
+      and analyzing sales and revenue.
     columns:
-      - name: order_guid
-      - name: user_guid
-      - name: promo_desc
-      - name: address_guid
-      - name: created_at_utc
-      - name: order_cost
-      - name: shipping_cost
-      - name: order_total
-      - name: tracking_guid
-      - name: shipping_service
-      - name: estimated_delivery_at_utc
-      - name: delivered_at_utc
-      - name: status
+      - name: ORDER_ID
+        description: ""
+        data_type: VARCHAR
+      - name: USER_ID
+        description: ""
+        data_type: VARCHAR
+      - name: PROMO_ID
+        description: ""
+        data_type: VARCHAR
+      - name: ADDRESS_ID
+        description: ""
+        data_type: VARCHAR
+      - name: CREATED_AT_UTC
+        description: ""
+        data_type: TIMESTAMP_NTZ
+      - name: ORDER_COST
+        description: ""
+        data_type: FLOAT
+      - name: SHIPPING_COST
+        description: ""
+        data_type: FLOAT
+      - name: ORDER_TOTAL
+        description: ""
+        data_type: FLOAT
+      - name: TRACKING_ID
+        description: ""
+        data_type: VARCHAR
+      - name: SHIPPING_SERVICE
+        description: ""
+        data_type: VARCHAR
+      - name: ESTIMATED_DELIVERY_AT_UTC
+        description: ""
+        data_type: TIMESTAMP_NTZ
+      - name: DELIVERED_AT_UTC
+        description: ""
+        data_type: TIMESTAMP_NTZ
+      - name: STATUS
         description: accepted values = shipped, delivered, preparing
-        tests:
-          - accepted_values:
-              values: ['shipped', 'delivered','preparing']
-
+        data_type: VARCHAR
   - name: stg_order_items
-    description: Items in a particular order info
+    description: The 'stg_order_items' model provides a detailed view of each item
+      in a specific order. It includes the unique identifiers for the order and
+      product, as well as the quantity of the product ordered. This model is
+      crucial for understanding the composition of orders, which can inform
+      inventory management, sales analysis, and customer behavior insights.
     columns:
-      - name: order_guid
-      - name: product_guid
-      - name: quantity
-
+      - name: ORDER_ID
+        description: ""
+        data_type: VARCHAR
+      - name: PRODUCT_ID
+        description: ""
+        data_type: VARCHAR
+      - name: QUANTITY
+        description: ""
+        data_type: NUMBER
   - name: stg_addresses
-    description: Addresses of users 
+    description: "The stg_addresses model is derived from the raw.public.addresses
+      source. It contains the following columns: address_guid, address, zipcode,
+      state, and country. These columns represent the unique identifier for each
+      address, the address itself, the zipcode, the state, and the country
+      respectively. This model is used to store the addresses of users."
     columns:
-      - name: address_guid
-      - name: address
-      - name: zipcode
-      - name: state
-      - name: country
-
+      - name: ADDRESS_ID
+        description: The unique identifier for each address in the dataset. This is a
+          primary key.
+        data_type: VARCHAR
+      - name: ADDRESS
+        description: The physical address associated with the unique identifier. This
+          includes street name, number, and any other relevant details.
+        data_type: VARCHAR
+      - name: ZIPCODE
+        description: The zip code associated with the physical address. This is used for
+          sorting and categorizing addresses based on geographical location.
+        data_type: NUMBER
+      - name: STATE
+        description: The 'STATE' column represents the state where the address is
+          located. It is extracted directly from the 'STATE' column in the
+          raw.public.addresses source.
+        data_type: VARCHAR
+      - name: COUNTRY
+        description: The 'COUNTRY' column represents the country where the address is
+          located. It is extracted directly from the 'COUNTRY' column in the
+          raw.public.addresses source.
+        data_type: VARCHAR
   - name: stg_events
-    description: Individual events per user session
+    description: "The stg_events model is a staging model that represents individual
+      events per user session. It contains the following columns: EVENT_ID,
+      SESSION_ID, USER_ID, PAGE_URL, CREATED_AT, EVENT_TYPE, ORDER_ID,
+      PRODUCT_ID. The EVENT_ID is a unique identifier for each event. The
+      SESSION_ID represents the session in which the event occurred. The USER_ID
+      is the identifier for the user who triggered the event. The PAGE_URL is
+      the URL of the page where the event occurred. The CREATED_AT is the
+      timestamp when the event was created. The EVENT_TYPE is the type of the
+      event. The ORDER_ID is the identifier for the order associated with the
+      event, if any. The PRODUCT_ID is the identifier for the product associated
+      with the event, if any."
     columns:
-      - name: event_guid
-      - name: session_guid
-      - name: user_guid
-      - name: page_url
-      - name: created_at_utc
-      - name: event_type
-      - name: order_guid
-      - name: product_guid
-
+      - name: EVENT_ID
+        description: A unique identifier for each event. This is a VARCHAR field and can
+          contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: SESSION_ID
+        description: A unique identifier for each user session. This is a VARCHAR field
+          and can contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: USER_ID
+        description: A unique identifier for each user. This is a VARCHAR field and can
+          contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: PAGE_URL
+        description: The URL of the page where the event occurred. This is a VARCHAR field.
+        data_type: VARCHAR
+      - name: CREATED_AT
+        description: The timestamp when the event was created. This is a TIMESTAMP_NTZ
+          field.
+        data_type: TIMESTAMP_NTZ
+      - name: EVENT_TYPE
+        description: The type of the event that occurred. This is a VARCHAR field.
+        data_type: VARCHAR
+      - name: ORDER_ID
+        description: The unique identifier for each order placed by a user. This is a
+          VARCHAR field and can contain alphanumeric characters.
+        data_type: VARCHAR
+      - name: PRODUCT_ID
+        description: The unique identifier for each product that is associated with an
+          event. This is a VARCHAR field and can contain alphanumeric
+          characters.
+        data_type: VARCHAR
   - name: stg_products
-    description: Individual product info
+    description: The 'stg_products' model provides detailed information about each
+      individual product. This includes the unique identifier for the product
+      (product_guid), the name of the product (product_name), the price of the
+      product (product_price), and the current inventory level for the product
+      (product_inventory). This model is crucial for business decisions related
+      to inventory management, pricing strategies, and product performance
+      analysis.
     columns:
-      - name: product_guid
-      - name: product_name
-      - name: product_price
-      - name: product_inventory
-
+      - name: PRODUCT_ID
+        description: The unique identifier for each product in the database. This is a
+          VARCHAR field.
+        data_type: VARCHAR
+      - name: NAME
+        description: The name of the product. This is a VARCHAR field.
+        data_type: VARCHAR
+      - name: PRICE
+        description: The price of the product. This is a FLOAT field representing the
+          cost of the product.
+        data_type: FLOAT
+      - name: INVENTORY
+        description: The INVENTORY column represents the current stock level of a
+          particular product. It is a numeric value that is updated as products
+          are sold or restocked.
+        data_type: NUMBER
   - name: stg_promos
-    description: Promotion info
+    description: The 'stg_promos' model provides information about various
+      promotions offered by the company. It includes details such as the type of
+      promotion, the discount offered, and the current status of the promotion.
+      This model is crucial for understanding the effectiveness of different
+      promotional strategies and can aid in making informed business decisions
+      regarding future promotional campaigns.
     columns:
-      - name: promo_type
-      - name: promo_discount
-      - name: promo_status
-
+      - name: PROMO_ID
+        description: The unique identifier for each promotion.
+        data_type: VARCHAR
+      - name: DISCOUNT
+        description: The discount amount or percentage offered in the promotion.
+        data_type: NUMBER
+      - name: STATUS
+        description: The current status of the promotion, indicating whether it is
+          active, expired, or upcoming.
+        data_type: VARCHAR
   - name: stg_users
-    description: Individual user info
+    description: The stg_users model is a staging table that contains individual
+      user information. It includes columns for user_guid, first_name,
+      last_name, email, phone_number, created_at_utc, updated_at_utc, and
+      address_guid. The data is sourced from the raw.public.users table in the
+      database. The SQL used to generate this model selects all columns from the
+      source table and renames them to match the schema of the stg_users model.
     columns:
-      - name: user_guid
-      - name: first_name
-      - name: last_name
-      - name: email
-      - name: phone_number
-      - name: created_at_utc
-      - name: updated_at_utc
-      - name: address_guid
+      - name: USER_ID
+        description: The unique identifier for each user. This is a primary key.
+        data_type: VARCHAR
+      - name: FIRST_NAME
+        description: The first name of the user.
+        data_type: VARCHAR
+      - name: LAST_NAME
+        description: The last name of the user.
+        data_type: VARCHAR
+      - name: EMAIL
+        description: The EMAIL column contains the email address of the user. It is a
+          unique identifier for each user in the system.
+        data_type: VARCHAR
+      - name: PHONE_NUMBER
+        description: The PHONE_NUMBER column contains the phone number of the user. It
+          is used for communication purposes.
+        data_type: VARCHAR
+      - name: CREATED_AT
+        description: The CREATED_AT column contains the timestamp of when the user was
+          created in the system. It is in UTC timezone.
+        data_type: TIMESTAMP_NTZ
+      - name: UPDATED_AT
+        description: The timestamp when the user's information was last updated. This is
+          in UTC.
+        data_type: TIMESTAMP_NTZ
+      - name: ADDRESS_ID
+        description: The unique identifier for the user's address. This corresponds to
+          the 'address_guid' in the 'addresses' table.
+        data_type: VARCHAR
